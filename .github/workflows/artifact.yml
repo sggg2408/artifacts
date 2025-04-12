@@ -1,4 +1,4 @@
-name: artifact
+name: artifact1
 
 on: [push]
 
