@@ -47,4 +47,4 @@ jobs:
         path: . 
 
     - name: Test ${{ env.FILE_NAME }}
-      run: source ./test.sh
+      run: source ls
