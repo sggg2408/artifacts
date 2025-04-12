@@ -1,35 +1,21 @@
-name: Hello World Artifact Workflow
+name: artifact1
 
 on: [push]
 
+env:
+  FILE_NAME: hello-server
+
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
-    outputs:
-      artifact-name: ${{ steps.set-output.outputs.name }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
-      - name: Run Hello World script
-        run: echo "Hello World" > hello.txt
+    - name: Check out code
+      uses: actions/checkout@v4
 
-      - name: Upload Hello World output
-        uses: actions/upload-artifact@v4
-        with:
-          name: hello-world-output
-          path: hello.txt
+    - name: Build ${{ env.FILE_NAME }} for ubuntu-latest
+      run: go build ${{ env.FILE_NAME }}.go
 
-  download:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Download Hello World artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: hello-world-output
-
-      - name: Display downloaded content
-        run: |
-          echo "Downloaded artifact content:"
-          cat hello.txt
+    - name: Build ${{ env.FILE_NAME }} for windows-latest
+      run: GOOS=windows GOARCH=amd64 go build ${{ env.FILE_NAME }}.go
