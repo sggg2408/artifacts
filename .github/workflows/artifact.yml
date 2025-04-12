@@ -21,7 +21,7 @@ jobs:
       run: GOOS=windows GOARCH=amd64 go build ${{ env.FILE_NAME }}.go
       
     - name: Upload artifact for linux
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.1.2
       with:
         name: linux
         path: ./${{ env.FILE_NAME }}
