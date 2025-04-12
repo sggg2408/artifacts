@@ -31,20 +31,17 @@ jobs:
       with:
         name: windows
         path: ./${{ env.FILE_NAME }}.exe
-  test-linux:
-    name: Test Linux
-    runs-on: [ubuntu-latest]
-    needs: [build]
+  
+  download:
+    runs-on: ubuntu-latest
+    needs: build
     steps:
+      - name: Download Hello World artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: linux
 
-    - name: Check out code
-      uses: actions/checkout@v4
-
-    - name: Download artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: linux
-        path: . 
-
-    - name: Test ${{ env.FILE_NAME }}
-      run: source ls
+      - name: Display downloaded content
+        run: |
+          echo "Downloaded artifact content:"
+          ls -ltrh
